@@ -1,14 +1,26 @@
-import { Route, Routes } from "react-router-dom"
-import FirstPage from "./pages/FirstPage/FirstPage"
-window.Telegram.WebApp
+import {useEffect} from "react";
+import {useTelegram} from "./hooks/useTelegram";
+import Header from "./components/Header/Header";
+import {Route, Routes} from 'react-router-dom'
+import ProductList from "./components/ProductList/ProductList";
+import Form from "./components/Form/Form";
+
 function App() {
-
+  const {onToggleButton, tg} = useTelegram();
+  
+  useEffect(() => {
+    tg.ready();
+  }, [])
+  
   return (
-    
-    <Routes>
-      <Route path='/' element={<FirstPage />} />
-    </Routes>
-  )
-}
-
-export default App
+    <div className="App">
+            <Header />
+            <Routes>
+                <Route index element={<ProductList />}/>
+                <Route path={'form'} element={<Form />}/>
+            </Routes>
+        </div>
+    );
+  }
+  
+  export default App;
